@@ -1,4 +1,4 @@
-use std::{fs::File, io::BufReader};
+use std::io;
 
 use anyhow::Result;
 use clusters::make_clusters;
@@ -11,11 +11,10 @@ mod vec3;
 fn main() -> Result<()> {
     let mut points = vec![];
     let mut roots = vec![];
-    let file = BufReader::new(File::open("xstigl00.txt")?);
 
-    parse(file, &mut points, &mut roots)?;
+    parse(io::stdin().lock(), &mut points, &mut roots)?;
 
-    let clusters = make_clusters(roots, points);
+    make_clusters(roots, points);
 
     Ok(())
 }

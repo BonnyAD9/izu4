@@ -4,7 +4,7 @@ pub fn make_clusters(
     roots: Vec<Vec3>,
     points: Vec<Vec3>,
 ) -> Vec<(Vec3, Vec<Vec3>)> {
-    let mut res = roots.into_iter().map(|r| (r, vec![])).collect();
+    let mut res: Vec<_> = roots.into_iter().map(|r| (r, vec![])).collect();
     for p in points {
         let idx = closest(p, &res);
         res[idx].1.push(p);
@@ -43,7 +43,7 @@ pub fn make_clusters(
     res
 }
 
-fn closest(point: Vec3, choose: &Vec<(Vec3, Vec<Vec3>)>) -> usize {
+fn closest(point: Vec3, choose: &[(Vec3, Vec<Vec3>)]) -> usize {
     choose
         .iter()
         .enumerate()
@@ -64,5 +64,5 @@ fn print_clusters(i: usize, clusters: &Vec<(Vec3, Vec<Vec3>)>) {
         }
         println!();
     }
-    println!("");
+    println!();
 }

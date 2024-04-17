@@ -1,5 +1,7 @@
 use std::{
-    fmt::Display, iter::Sum, ops::{Add, Div, Sub}
+    fmt::Display,
+    iter::Sum,
+    ops::{Add, Div, Sub},
 };
 
 #[derive(Copy, Clone, PartialEq)]

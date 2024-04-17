@@ -1,6 +1,6 @@
 use std::io::BufRead;
 
-use anyhow::{anyhow, bail, Result};
+use anyhow::{bail, Result};
 
 use crate::vec3::Vec3;
 
@@ -24,7 +24,7 @@ fn read_first_points<I>(input: &mut I, points: &mut Vec<Vec3>) -> Result<()>
 where
     I: Iterator<Item = Result<String>>,
 {
-    while let Some(l) = input.next() {
+    for l in input {
         let l = l?;
         if l.starts_with('(') {
             return read_all_points(&l, points);
@@ -45,13 +45,13 @@ fn read_all_points(mut s: &str, res: &mut Vec<Vec3>) -> Result<()> {
         if !s.starts_with(chr) {
             bail!("Expected '{chr}'");
         }
-        return Ok(&s[1..]);
+        Ok(&s[1..])
     }
 
     fn read_num(s: &mut &str) -> Result<f64> {
         *s = s.trim_start();
-        let Some((n, ns)) =
-            s.split_once(|c: char| !c.is_digit(10) && c != '.' && c != '-')
+        let Some((n, ns)) = s
+            .split_once(|c: char| !c.is_ascii_digit() && c != '.' && c != '-')
         else {
             let res = s.parse()?;
             *s = "";
